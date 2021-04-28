@@ -13,8 +13,9 @@ public class Main {
     }
 
     public static void task1() {
-        try {
-            BufferedReader bufferedFile = new BufferedReader(new FileReader("file.txt"));
+        InputStream resourceFileTask1 = Main.class.getResourceAsStream("/file.txt");
+
+        try (BufferedReader bufferedFile = new BufferedReader(new InputStreamReader(resourceFileTask1))) {
             String line;
             while ((line = bufferedFile.readLine()) != null) {
                 printPhone(line);
@@ -42,11 +43,9 @@ public class Main {
 
     public static void task2() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        // Нужно указать актуальные пути к файлам для проверки задания
-        try (BufferedReader list = new BufferedReader(new FileReader("C:\\Users\\vgavr\\IdeaProjects\\untitled1\\file.txt"));
-             BufferedWriter writerJson = new BufferedWriter(new FileWriter("C:\\Users\\vgavr\\IdeaProjects\\untitled1\\user.json"))
-        ) {
+        InputStream file2 = Main.class.getResourceAsStream("/file2.txt");
+        try (BufferedReader list = new BufferedReader(new InputStreamReader(file2));
+             BufferedWriter writerJson = new BufferedWriter(new FileWriter("user.json"))) {
             String[] arr;
             List<String> myList = new ArrayList<>();
             String line = list.readLine();
@@ -56,15 +55,15 @@ public class Main {
             }
             writerJson.write(myList.toString());
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
     // Задание 3 решил вынести в отдельный класс
     public static void task3() {
-        // Нужно указать актуальные пути к файлам для проверки задания
-        UniqueWords.getInstance(new File("C:\\Users\\vgavr\\IdeaProjects\\untitled1\\words.txt"));
+        InputStream file2 = Main.class.getResourceAsStream("/words.txt");
+        UniqueWords.getInstance(file2);
         UniqueWords.printSortWords();
 
 

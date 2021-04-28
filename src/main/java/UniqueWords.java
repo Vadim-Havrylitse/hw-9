@@ -2,17 +2,16 @@ import java.io.*;
 import java.util.*;
 
 public final class UniqueWords {
-    public static HashMap<String, Integer> words = new HashMap<String, Integer>();
-    private static File file;
+    public static HashMap<String, Integer> words = new HashMap<>();
+
 
     private UniqueWords() {
     }
 
 
-    public static void getInstance(File file) {
-        UniqueWords.file = file;
+    public static void getInstance(InputStream file) {
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file))) {
             String str;
             while ((str = bufferedReader.readLine()) != null) {
                 if (str.strip().equals("") || str.strip().equals(" ")) {
@@ -45,14 +44,11 @@ public final class UniqueWords {
 
     public static void printSortWords() {
         List list = new ArrayList(words.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                if (o1.getValue() == o2.getValue()) {
-                    return o1.getKey().length() - o2.getKey().length();
-                }
-                return o2.getValue() - o1.getValue();
+        Collections.sort(list, (Comparator<Map.Entry<String, Integer>>) (o1, o2) -> {
+            if (o1.getValue() == o2.getValue()) {
+                return o1.getKey().length() - o2.getKey().length();
             }
+            return o2.getValue() - o1.getValue();
         });
 
         Iterator iterator = list.iterator();
