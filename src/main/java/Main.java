@@ -4,12 +4,13 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
         task1();
-        task2();
-        task3();
+        //task2();
+        //task3();
     }
 
     public static void task1() {
@@ -35,9 +36,9 @@ public class Main {
 
     //Дополнительный метод для задания №1
     public static boolean verificationOfPhone(String phone) {
-        char[] arr = phone.toCharArray();
-        if (arr.length == 14 && arr[0] == '(' && arr[4] == ')' && arr[5] == ' ' && arr[9] == '-') return true;
-        else return arr.length == 12 && arr[3] == '-' && arr[7] == '-';
+        boolean matches1 = phone.matches("[(]\\d{3}[)] \\d{3}[-]\\d{4}");
+        boolean matches2 = phone.matches("\\d{3}-\\d{3}-\\d{4}");
+        return matches1 || matches2;
     }
 
 
