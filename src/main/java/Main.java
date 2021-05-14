@@ -4,17 +4,20 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        task1();
-        //task2();
-        //task3();
+        try {
+            task1();
+            task2();
+            task3();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void task1() {
-        InputStream resourceFileTask1 = Main.class.getResourceAsStream("/file.txt");
+    public static void task1() throws FileNotFoundException {
+        InputStream resourceFileTask1 = new FileInputStream("src/main/resources/file.txt");
 
         try (BufferedReader bufferedFile = new BufferedReader(new InputStreamReader(resourceFileTask1))) {
             String line;
@@ -42,9 +45,9 @@ public class Main {
     }
 
 
-    public static void task2() {
+    public static void task2() throws FileNotFoundException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        InputStream file2 = Main.class.getResourceAsStream("/file2.txt");
+        InputStream file2 = new FileInputStream("src/main/resources/file2.txt");
         try (BufferedReader list = new BufferedReader(new InputStreamReader(file2));
              BufferedWriter writerJson = new BufferedWriter(new FileWriter("user.json"))) {
             String[] arr;
@@ -62,8 +65,8 @@ public class Main {
     }
 
     // Задание 3 решил вынести в отдельный класс
-    public static void task3() {
-        InputStream file2 = Main.class.getResourceAsStream("/words.txt");
+    public static void task3() throws FileNotFoundException {
+        InputStream file2 = new FileInputStream("src/main/resources/words.txt");
         UniqueWords.getInstance(file2);
         UniqueWords.printSortWords();
 
